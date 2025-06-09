@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ApodViewer } from './components/ApodViewer';
 
 function App() {
+  // @ts-ignore
   const [date, setDate] = useState<string | undefined>(undefined);
 
   return (
