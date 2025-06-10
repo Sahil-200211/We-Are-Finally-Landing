@@ -62,6 +62,18 @@ const SplashScreen = ({
           }}
         />
       )}
+
+      {!started && (
+        <button
+          onClick={() => {
+            onMusicStart();
+            onStart(); // go straight to landing
+          }}
+          className="fixed bottom-4 right-4 px-4 py-2 text-sm font-semibold rounded-2xl bg-gradient-to-b from-green-500 to-cyan-400 text-white border border-gray-500/40 shadow-md hover:shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all duration-300 backdrop-blur-sm"
+        >
+          Skip Intro
+        </button>
+      )}
     </motion.div>
   );
 };

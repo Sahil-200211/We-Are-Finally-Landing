@@ -24,7 +24,7 @@ function App() {
   const startLanding = () => {
     setTimeout(() => {
       setIsSplashDone(true);
-    }, 7000);
+    }, 2000);
   };
 
   useEffect(() => {
