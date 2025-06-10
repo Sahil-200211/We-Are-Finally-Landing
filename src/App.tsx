@@ -71,7 +71,7 @@ function App() {
             onClick={toggleMute}
             className="fixed top-4 left-4 px-5 py-2 rounded-xl bg-gradient-to-br from-pink-700 to-purple-900 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-pink-500/30 hover:border-purple-400/60 backdrop-blur-sm z-50"
           >
-            {isMuted ? <GoUnmute /> : <GoMute />}
+            {isMuted ? <GoMute /> : <GoUnmute />}
           </button>
 
           <DatePicker date={date} onDateChange={setDate} />
