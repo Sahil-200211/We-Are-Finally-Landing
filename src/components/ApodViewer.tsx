@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useApod } from "../hooks/useApod";
-import { useState, type Key } from "react";
+import { type Key } from "react";
 import DecryptedText from "./DecryptedText";
+import { FaDownload } from "react-icons/fa";
 
 interface ApodViewerProps {
   date?: string;
@@ -9,7 +10,6 @@ interface ApodViewerProps {
 
 export const ApodViewer = ({ date }: ApodViewerProps) => {
   const { data, loading, error } = useApod(date);
-  const [imgLoaded, setImgLoaded] = useState(false);
 
   if (loading)
     return (
@@ -26,8 +26,9 @@ export const ApodViewer = ({ date }: ApodViewerProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      {/* Title */}
-      <h1 className="text-4xl font-bold text-center mb-8">{data.title}</h1>
+      <h1 className="text-6xl font-[Merriweather] font-bold text-center mb-8">
+        {data.title}
+      </h1>
 
       {/* Image + Text side by side */}
       <div className="flex flex-col lg:flex-row items-start justify-between space-y-6 lg:space-y-0 lg:space-x-12">
@@ -38,19 +39,18 @@ export const ApodViewer = ({ date }: ApodViewerProps) => {
               <motion.img
                 src={data.url}
                 alt={data.title}
-                className="w-full rounded-lg shadow-lg"
+                className="w-full h-full rounded-lg shadow-lg"
                 initial={{ opacity: 0, scale: 0.9 }}
-                animate={imgLoaded ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.8 }}
-                onLoad={() => setImgLoaded(true)}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 2.0 }}
               />
               <a
                 href={data.hdurl || data.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-400 rounded text-white mt-4 ml-50"
+                className="inline-block mt-6 px-6 py-3 rounded-xl bg-gradient-to-br from-yellow-500 via-orange-600 to-red-600 text-white font-bold uppercase tracking-wider shadow-lg hover:shadow-orange-400/50 transition-all duration-300 hover:scale-105 active:scale-95 border border-orange-300/30 backdrop-blur-md animate-[pulse_2.5s_infinite]"
               >
-                Download Image
+              <FaDownload/>
               </a>
             </>
           ) : (
@@ -63,21 +63,23 @@ export const ApodViewer = ({ date }: ApodViewerProps) => {
           )}
         </div>
 
-        <div className="flex-1 text-left">
-          {data.explanation.split(". ").map((line: string, index: Key | null | undefined) => (
-            <div key={index} className="mb-1">
-              <DecryptedText
-                text={line}
-                animateOn="view"
-                revealDirection="start"
-                speed={100}
-                maxIterations={30}
-                className="text-lg leading-relaxed text-white"
-                encryptedClassName="text-gray-500"
-                parentClassName="block"
-              />
-            </div>
-          ))}
+        <div className="flex-1 text-left font-[Aldrich]">
+          {data.explanation
+            .split(". ")
+            .map((line: string, index: Key | null | undefined) => (
+              <div key={index} className="mb-1">
+                <DecryptedText
+                  text={line}
+                  animateOn="view"
+                  revealDirection="start"
+                  speed={100}
+                  maxIterations={30}
+                  className="text-lg leading-relaxed text-white"
+                  encryptedClassName="text-gray-500"
+                  parentClassName="block"
+                />
+              </div>
+            ))}
         </div>
       </div>
     </motion.div>

@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { ApodViewer } from "./components/ApodViewer";
 import { DatePicker } from "./components/DatePicker";
 import SplashScreen from "./components/SplashScreen";
+import { FaChevronCircleLeft } from "react-icons/fa";
+import { FaChevronCircleRight } from "react-icons/fa";
+import { GoUnmute } from "react-icons/go";
+import { GoMute } from "react-icons/go";
 
 function App() {
   const [date, setDate] = useState<string | undefined>(undefined);
@@ -63,32 +67,27 @@ function App() {
         </>
       ) : (
         <>
-          {/* Mute / Unmute Button */}
           <button
             onClick={toggleMute}
-            className="fixed top-4 right-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded z-50"
+            className="fixed top-4 left-4 px-5 py-2 rounded-xl bg-gradient-to-br from-pink-700 to-purple-900 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-pink-500/30 hover:border-purple-400/60 backdrop-blur-sm z-50"
           >
-            {isMuted ? "Unmute Music 🎵" : "Mute Music 🔇"}
+            {isMuted ? <GoUnmute /> : <GoMute />}
           </button>
-
-          <header className="text-center py-6">
-            {/* No title here anymore */}
-          </header>
 
           <DatePicker date={date} onDateChange={setDate} />
 
-          <div className="flex justify-center space-x-4 mb-6">
+          <div className="fixed top-16 right-5 space-x-4 z-50 mt-1">
             <button
               onClick={handlePrev}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+              className="rounded-full bg-gradient-to-br from-purple-800 to-indigo-700 px-5 py-3 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-purple-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-purple-500/30 hover:border-indigo-400/60 backdrop-blur-sm"
             >
-              Prev
+              <FaChevronCircleLeft />
             </button>
             <button
               onClick={handleNext}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+              className="rounded-full bg-gradient-to-br from-indigo-700 to-purple-800 px-5 py-3 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-indigo-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-indigo-500/30 hover:border-purple-400/60 backdrop-blur-sm"
             >
-              Next
+              <FaChevronCircleRight />
             </button>
           </div>
 

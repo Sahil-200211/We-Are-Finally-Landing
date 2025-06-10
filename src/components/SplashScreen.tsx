@@ -3,7 +3,13 @@ import { motion } from "framer-motion";
 import { BlurIn } from "./Blur-in";
 import TypewriterText from "./TypewriterText";
 
-const SplashScreen = ({onStart, onMusicStart} : { onStart: () => void, onMusicStart: () => void }) => {
+const SplashScreen = ({
+  onStart,
+  onMusicStart,
+}: {
+  onStart: () => void;
+  onMusicStart: () => void;
+}) => {
   const [started, setStarted] = useState(false);
 
   const typewriterLines = [
@@ -14,11 +20,11 @@ const SplashScreen = ({onStart, onMusicStart} : { onStart: () => void, onMusicSt
     "Preparing for landing...",
     "Landing.",
   ];
-  
-  const handleStartLanding =() => {
+
+  const handleStartLanding = () => {
     setStarted(true);
-    onMusicStart();   
-  }
+    onMusicStart();
+  };
 
   return (
     <motion.div
@@ -33,17 +39,17 @@ const SplashScreen = ({onStart, onMusicStart} : { onStart: () => void, onMusicSt
           <BlurIn>We Are Finally Landing</BlurIn>
 
           <motion.div
-            className="h-1 w-48 bg-gradient-to-r from-purple-500 to-blue-500 mb-8"
+            className="h-1 w-48 bg-gradient-to-r from-green-500 to-cyan-600 mb-8"
             initial={{ width: 0 }}
-            animate={{ width: "35rem" }}
+            animate={{ width: "47rem" }}
             transition={{ duration: 4 }}
           />
 
           <button
             onClick={handleStartLanding}
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-400 rounded text-lg font-bold"
+            className="px-6 py-3 bg-gradient-to-br from-cyan-700 to-blue-900 text-lg font-extrabold text-blue-100 rounded-xl border border-cyan-400/30 hover:border-cyan-300/60 shadow-md hover:shadow-cyan-400/50 transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-sm tracking-widest uppercase font-mono"
           >
-            Start Landing 🚀
+            Initiate Landing Sequence
           </button>
         </>
       )}
