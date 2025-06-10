@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useApod } from "../hooks/useApod";
-import { downloadImage } from "../utils/downloadImage";
 
 interface ApodViewerProps {
   date?: string;
