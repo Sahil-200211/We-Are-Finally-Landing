@@ -1,9 +1,20 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ApodViewer } from './components/ApodViewer';
 import { DatePicker } from './components/DatePicker';
+import SplashScreen from './components/SplashScreen';
 
 function App() {
   const [date, setDate] = useState<string | undefined>(undefined);
+  const [isSplashDone, setIsSplashDone] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const startLanding = () => {
+  setIsSplashDone(true);
+  if (audioRef.current) {
+    audioRef.current.play().catch(err => console.log('Audio play error:', err));
+  }
+};
 
   const handlePrev = () => {
     if (!date) return;
@@ -13,7 +24,7 @@ function App() {
   };
 
   const handleNext = () => {
-    if(!date) return;
+    if (!date) return;
     const nextDate = new Date(date);
     nextDate.setDate(nextDate.getDate() + 1);
     const today = new Date().toISOString().split('T')[0];
@@ -21,24 +32,53 @@ function App() {
     if (newDate <= today) setDate(newDate);
   };
 
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <header className="text-center py-6">
-        <h1 className="text-5xl font-extrabold">We Are Finally Landing 🚀</h1>
-      </header>
+      <audio ref={audioRef} src="/we-are-finally-landing.mp3" loop />
 
-      <DatePicker date={date} onDateChange={setDate} />
+      {!isSplashDone ? (
+        <SplashScreen onStart={startLanding} />
+      ) : (
+        <>
+          {/* Mute / Unmute Button */}
+          <button
+            onClick={toggleMute}
+            className="fixed top-4 right-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded z-50"
+          >
+            {isMuted ? 'Unmute Music 🎵' : 'Mute Music 🔇'}
+          </button>
 
-      <div className="flex justify-center space-x-4 mb-6">
-        <button onClick={handlePrev} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
-          Prev
-        </button>
-        <button onClick={handleNext} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
-          Next
-        </button>
-      </div>
+          <header className="text-center py-6">
+            {/* No title here anymore */}
+          </header>
 
-      <ApodViewer date={date} />
+          <DatePicker date={date} onDateChange={setDate} />
+
+          <div className="flex justify-center space-x-4 mb-6">
+            <button
+              onClick={handlePrev}
+              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+            >
+              Prev
+            </button>
+            <button
+              onClick={handleNext}
+              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
+            >
+              Next
+            </button>
+          </div>
+
+          <ApodViewer date={date} />
+        </>
+      )}
     </div>
   );
 }
